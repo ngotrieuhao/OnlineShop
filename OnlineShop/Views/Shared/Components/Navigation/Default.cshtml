@@ -1,0 +1,30 @@
+﻿@using OnlineShop.ViewModels.Catalog.Categories
+@model List<CategoryViewModel>
+<!-- NAVIGATION -->
+<nav id="navigation">
+    <!-- container -->
+    <div class="container">
+        <!-- responsive-nav -->
+        <div id="responsive-nav">
+            <!-- NAV -->
+            <ul class="main-nav nav navbar-nav">
+                <li class="active" style=" background-color: #3399ff;"><a href="/" >Homepage</a></li>
+                @foreach (var category in Model)
+                {
+                    <li>
+                            @*@Html.ActionLink(category.Name, "ViewByCategory", "Home", new { cateId = category.Id })*@
+                        <a asp-action="ViewByCategory" asp-controller="Home" asp-route-cateId="@category.Id" style="color: white;">@category.Name</a>
+                    </li>
+                }
+                <li><a asp-action="Contact" asp-controller="Home" style="color: white;">Contact</a></li>
+                <li><a asp-action="Index" asp-controller="Coupon" style="color: white;">Promotion</a></li>
+            </ul>
+            <!-- /NAV -->
+        </div>
+        <!-- /responsive-nav -->
+    </div>
+    <!-- /container -->
+</nav>
+<!-- /NAVIGATION -->
+
+

@@ -1,0 +1,168 @@
+﻿@using OnlineShop.ViewModels.Common;
+@using OnlineShop.ViewModels.Utilities.Enums;
+@model OnlineShop.ViewModels.Sales.OrderViewModel
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@{
+    ViewData["Title"] = "Order details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Order details</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a style="color: #0779e4;" href="/">Homepage</a></li>
+        <li class="breadcrumb-item active">Order details</li>
+    </ol>
+    <div class="card mb-12">
+        <div class="card-header">
+            <a class="btn btn-success" asp-action="Index" asp-controller="Order">Back to list</a>
+        </div>
+        <div class="card-body">
+            <h2>Receiver's information</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+
+                    <tbody>
+                        @*  *@
+                        <tr>
+                            <td class="font-weight-bold">
+                                Placer's name
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.Name)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">
+                                Recipient's name
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.ShipName)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">
+                                Receiver's address
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.ShipAddress)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold">
+                                Recipient's phone number
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.ShipPhoneNumber)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold ">
+                                Booking date
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.OrderDate)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold ">
+                                Status
+                            </td>
+                            <td>
+                                @{
+                                    var status = "";
+                                    var statusEnum = (int)Model.Status;
+                                    switch (statusEnum)
+                                    {
+                                        case 1:
+                                            status = "Waiting for approval";
+                                            break;
+                                        case 2:
+                                            status = "Approved";
+                                            break;
+                                        case 3:
+                                            status = "Delivering";
+                                            break;
+                                        case 4:
+                                            status = "Delivered";
+                                            break;
+                                        case 5:
+                                            status = "Canceled";
+                                            break;
+                                        default:
+                                            status = "...";
+                                            break;
+                                    }
+                                }
+                                @status
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="font-weight-bold ">
+                                Order value
+                            </td>
+                            <td>
+                                @Model.Price.ToString("N0")
+                                <span>&#8363;</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    ID
+                                </th>
+                                <th class="text-center">
+                                    Avatar product
+                                </th>
+                                <th class="text-center">
+                                    Name
+                                </th>
+                                <th class="text-center">
+                                    Price
+                                </th>
+                                <th class="text-center">
+                                    Quantity purchased
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderDetails)
+                            {
+                                <tr>
+                                    <td class="text-center">
+                                        @Html.DisplayFor(item => item.Id)
+                                    </td>
+                                    <td class="text-center">
+                                        <img style="width:100px;height:100px" src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt="Alternate Text" />
+                                    </td>
+                                    <td class="text-center">
+                                        @item.Name
+                                    </td>
+
+                                    <td class="text-center">
+                                        @item.Price.ToString("N0") <span>&#8363;</span>
+                                    </td>
+                                    <td class="text-center">
+                                        @item.Quantity
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

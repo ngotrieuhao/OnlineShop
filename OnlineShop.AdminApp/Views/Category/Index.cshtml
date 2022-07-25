@@ -1,0 +1,117 @@
+﻿@using OnlineShop.ViewModels.Common;
+@model PagedResult<OnlineShop.ViewModels.Catalog.Categories.CategoryViewModel>
+
+@{
+    ViewData["Title"] = "Category Lists";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Category Lists</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a style="color: #0779e4;" href="/">Homepage</a></li>
+        <li class="breadcrumb-item active">Category Lists</li>
+    </ol>
+    <div class="card mb-12">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-7 col-xs-12">
+                    <a class="btn btn-success" asp-action="Create" asp-controller="Category">Create New</a>
+                </div>
+                <div class="col-md-5 col-xs-12">
+                    <form asp-action="Index" asp-controller="Category" method="get">
+                        <div class="row">
+                            <div class="col-md-9">
+                                @*name: là tên tham số*@
+                                <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-info"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                <button type="button" onclick="window.location.href='/Category/Index'" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            @if (TempData["CreateCategorySuccessful"] != null)
+            {
+                <script>
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Add category successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                </script>
+            }
+            else if (TempData["UpdateCategorySuccessful"] != null)
+            {
+                <script>
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Update category successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                </script>
+            }
+            else if (TempData["DeleteCategorySuccessful"] != null)
+            {
+                <script>
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Delete category successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                </script>
+            }
+            <div class="table-responsive" style="margin-left: 22rem; width: 50%;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style=" width: 5rem;">
+                                ID
+                            </th>
+                            <th class="text-center">
+                                Name
+                            </th>
+                            <th class="text-center" style=" width: 20rem;">
+                                Operation
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td class="text-center">
+                                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id" style="padding-right: 30px; width: 40px; height: 40px;">
+                                        <i class="fas fa-edit"></i>
+                                    </a> |
+                                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id" style="width: 40px; height: 40px;">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @*truyền Model vào hàm InvokeAsync của class PagerViewComponent để phân trang *@
+            @await Component.InvokeAsync("Pager", Model)
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+﻿@model CouponViewModel
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <h2>
+                @Html.Raw(Model.Describe)
+            </h2>
+            <span style="background-color:crimson; padding-top: 13px; height: 4rem; margin: 20px 0px; width: 14rem; font-size: 15px;" 
+                  class="badge badge-pill badge-success">Coupon</span>
+        </div>
+        <div class="row" style=" font-size: 16px;">
+            <p>Coupon code: <span style="font-style:italic; color:red">@Model.Code</span> </p>
+            <p>Remain: <span style="font-style:italic; color:red">@Model.Count</span> </p>
+            <p>You just need to enter the above coupon code in the APPLY CODE section at checkout</p>
+            <p>Note: <span style="font-style:italic; color:red">Each coupon code can only be used once</span></p>
+        </div>
+        <div class="row">
+            <img style="border-radius: 30px; margin: 20px 0px; width: 740px; height: 650px;" src="/images/saleoff.png" alt="Alternate Text" />
+        </div>
+    </div>
+</div>

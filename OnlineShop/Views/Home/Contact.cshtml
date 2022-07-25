@@ -1,0 +1,183 @@
+﻿@model  OnlineShop.Models.Contact
+
+@{ 
+    ViewData["Title"] = "Contact Us";
+    var msg = TempData["Message"] as string;
+}
+
+
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+    <link type="text/css" rel="stylesheet" href="~/css/contact.css" />
+</head>
+<body>
+
+    <main class="l-main">
+        <!--===== HOME =====-->
+        <section class="home bd-grid" id="home">
+            @if(!string.IsNullOrEmpty(msg))
+            {
+                <div class="alert alert-success" style=" width: 42rem; height: 6rem;">
+                    <p style="font-size:15px; font-weight:600;">@msg</p>
+                </div>
+            }
+            <div class="home__data">
+                <h1 class="home__title">Hi,<br>I'am <span class="home__title-color">Hao</span><br> Web Designer</h1>
+
+                <a href="#" class="button">Contact</a>
+
+            </div>
+            <div class="home__img">
+                <img src="~/images/aboutme.jpg" style="border-radius:30rem; width: 75%;" />
+            </div>
+        </section>
+
+        <!--===== ABOUT =====-->
+        <section class="about section " id="about">
+            <h2 class="section-title">About</h2>
+
+            <div class="about__container bd-grid">
+                <div class="about__img">
+                    <img src="~/images/aboutme2.jpg" alt="">
+                </div>
+
+                <div>
+                    <h2 class="about__subtitle" style="font-size:40px;">I'am Hao</h2>
+                    <p class="about__text" style="line-height: 1.9; font-size: 18px; text-align: justify;">
+                        My full name is Ngo Trieu Hao. I'm a Full Stack Developer. I study at the University of Greenwich.
+                        I have 2 years of experience using Programming Languages such as: HTML, CSS, JavaScript, JQuery, Boostrap and PHP. Besides that, Database are: MongoDb and SQL.
+                        I have also done many other projects with nearly 10 projects during the past time. Since then,
+                        I have had many lessons that not only help my hard skills become more proficient but also absorb and learn more soft skills.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!--===== SKILLS =====-->
+        <section class="skills section" id="skills">
+            <h2 class="section-title">Skills</h2>
+
+            <div class="skills__container bd-grid">
+                <div>
+                    <h2 class="skills__subtitle" style="font-size:30px;">Profesional Skills</h2>
+                    <p class="skills__text" style="font-size:18px;">These are the skills that I have after pursuing my passion and studying for 3 years.</p>
+                    <div class="skills__data">
+                        <div class="skills__names">
+                            <i class='bx bxl-html5 skills__icon'></i>
+                            <span class="skills__name">HTML</span>
+                        </div>
+                        <div class="skills__bar skills__html">
+
+                        </div>
+                        <div>
+                            <span class="skills__percentage">95%</span>
+                        </div>
+                    </div>
+                    <div class="skills__data">
+                        <div class="skills__names">
+                            <i class='bx bxl-css3 skills__icon'></i>
+                            <span class="skills__name">CSS</span>
+                        </div>
+                        <div class="skills__bar skills__css">
+
+                        </div>
+                        <div>
+                            <span class="skills__percentage">85%</span>
+                        </div>
+                    </div>
+                    <div class="skills__data">
+                        <div class="skills__names">
+                            <i class='bx bxl-javascript skills__icon'></i>
+                            <span class="skills__name">JAVASCRIPT</span>
+                        </div>
+                        <div class="skills__bar skills__js">
+
+                        </div>
+                        <div>
+                            <span class="skills__percentage">65%</span>
+                        </div>
+                    </div>
+                    <div class="skills__data">
+                        <div class="skills__names">
+                            <i class='bx bxs-paint skills__icon'></i>
+                            <span class="skills__name">UX/UI</span>
+                        </div>
+                        <div class="skills__bar skills__ux">
+
+                        </div>
+                        <div>
+                            <span class="skills__percentage">85%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <img src="~/images/learning.png" alt="" class="skills__img">
+                </div>
+            </div>
+        </section>
+
+        <!--===== WORK =====-->
+        <section class="work section" id="work">
+            <h2 class="section-title">Work</h2>
+
+            <div class="work__container bd-grid">
+                <div class="work__img">
+                    <img src="~/images/work1.jpg" alt="">
+                </div>
+                <div class="work__img">
+                    <img src="~/images/work2.jpg" alt="">
+                </div>
+                <div class="work__img">
+                    <img src="~/images/work3.jpg" alt="">
+                </div>
+                <div class="work__img">
+                    <img src="~/images/work4.jpg" alt="">
+                </div>
+                <div class="work__img">
+                    <img src="~/images/work5.jpg" alt="">
+                </div>
+                <div class="work__img">
+                    <img src="~/images/work6.jpg" alt="">
+                </div>
+            </div>
+        </section>
+
+        <!--===== CONTACT =====-->
+        <section class="contact section" id="contact">
+            <h2 class="section-title">Contact</h2>
+
+            <div class="contact__container bd-grid" style="border: 5px solid #cccccc; box-shadow: 10px 10px #cccc; width: 42rem;">
+                <form asp-action="Contact" class="contact__form">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group" style="margin-top: 2rem;">
+                        <label asp-for="Name" class="control-label" style="display: block; font-size: 18px; font-weight: 600;"></label>
+                        <input asp-for="Name" type="text" placeholder="Name" class="contact_name" style="font-size: 16px; padding-left: 1rem; height: 4rem; width: 36rem; ">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="margin-top: 2rem;">
+                        <label asp-for="Email" class="control-label" style="display: block; font-size: 18px; font-weight: 600;"></label>
+                        <input asp-for="Email" type="email" placeholder="Email" class="contact_email" style="font-size: 16px; padding-left: 1rem; height: 4rem; width: 36rem; ">
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="margin-top: 2rem;">
+                        <label asp-for="Message" class="control-label" style="display: block; font-size: 18px; font-weight: 600;"></label>
+                        <textarea asp-for="Message" placeholder="Message" class="contact_message" cols="0" rows="10" style="font-size: 16px; padding-top: 1rem; padding-left: 1rem; width: 36rem; "> </textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="transform: scale(1.3); width: 32rem; margin-bottom: 2rem; margin-top: 0rem;">
+                        <input type="submit" value="Send" class="contact__button button" />
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!--===== SCROLL REVEAL =====-->
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <!--===== MAIN JS =====-->
+    <script src="~/js/contact.js"></script>
+
+</body>

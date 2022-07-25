@@ -1,0 +1,153 @@
+﻿@using OnlineShop.ViewModels.Common;
+@model PagedResult<OnlineShop.ViewModels.Catalog.Products.ProductViewModel>
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@{
+    ViewData["Title"] = "Product Lists";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+    </script>
+}
+<div class="container-fluid">
+    <h1 class="mt-4">Product Lists</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a style="color: #0779e4;" href="/">Homepage</a></li>
+        <li class="breadcrumb-item active">Product Lists</li>
+    </ol>
+    <div class="card mb-12">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-7 col-xs-12">
+                    <a class="btn btn-success" asp-action="Create" asp-controller="Product">Create New</a>
+                </div>
+                <div class="col-md-5 col-xs-12">
+                    <form asp-action="Index" asp-controller="Product" method="get">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <select name="categoryId" onchange="this.form.submit()" asp-items="@ViewBag.Categories" class="form-control">
+                                    <option>--Select category--</option>
+                                </select>
+                            </div>
+                            <div class="col-md-5">
+                                @*name: là tên tham số*@
+                                <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                            </div>
+                            <div class="col-md-3">
+                                <button type="submit" class="btn btn-info"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                <button type="button" onclick="window.location.href='/Product/Index'" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            @if (TempData["CreateProductSuccessful"] != null)
+            {
+                <script>
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Add product successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                </script>
+            }
+            else if (TempData["UpdateProductSuccessful"] != null)
+            {
+                <script>
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Update product successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                </script>
+            }
+            else if (TempData["DeleteProductSuccessful"] != null)
+            {
+                <script>
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Delete product successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                </script>
+            }
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+                                ID
+                            </th>
+                            <th class="text-center">
+                                Product Image
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th class="text-center">
+                                Sale Price
+                            </th>
+                            <th class="text-center">
+                                Inventory Number
+                            </th>
+                            <th class="text-center" style="width: 18rem;">
+                                Operation
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td class="text-center">
+                                    <img style="width:100px;height:100px" src="@(Configuration["BaseAddress"] + item.ThumbnailImage)" alt="Alternate Text" />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td class="text-center">
+                                    <span>&#36;</span>@item.Price.ToString("N0")
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Stock)
+                                </td>
+                                <td>
+                                    <a class="btn btn-warning" asp-action="Details" asp-route-id="@item.Id" style=" margin-left: 3rem;width: 40px; height: 40px;">
+                                        <i class="fas fa-info"></i>
+                                    </a> |
+                                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id" style="padding-right: 30px; width: 40px; height: 40px;">
+                                        <i class="fas fa-edit"></i>
+                                    </a> |
+                                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id" style="width: 40px; height: 40px;">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a> 
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @*truyền Model vào hàm InvokeAsync của class PagerViewComponent để phân trang *@
+            <div>
+                @await Component.InvokeAsync("Pager", Model)
+            </div>
+        </div>
+    </div>
+</div>
